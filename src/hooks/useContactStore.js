@@ -34,7 +34,8 @@ export const useContactStore = () => {
     const startNewContact = async (contact) => {
         try {
             const {data} = await contactApi.post('/contact/new', contact)
-            dispatch(onSetNewContact({ ...contact, id: data.contact._id }))
+            console.log(data)
+            dispatch(onSetNewContact({ ...contact, _id: data.contact._id }))
         } catch (error) {
             console.log(error) 
             openAlertModal('Error adding new contact to your list')

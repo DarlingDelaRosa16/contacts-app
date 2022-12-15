@@ -5,9 +5,12 @@ import { ContactModal } from "../components/ContactModal"
 import { ContactSearch } from "../components/ContactSearch"
 import { ContactView } from "../components/ContactView"
 import { DeleteContact } from "../components/DeleteContact"
+import { ImportContact } from "../components/ImportContact"
+import { ImportContactBtn } from "../components/ImportContactBtn"
 import { NewContact } from "../components/NewContact"
 import { SortContact } from "../components/SortContact"
 import { Navbar } from "../ui/Navbar"
+
 
 export const ContactPage = () => {
     
@@ -25,6 +28,7 @@ export const ContactPage = () => {
                 <div className="col-2 mt-3 d-flex justify-content-end">
                     <SortContact/>
                     <NewContact/>
+                    <ImportContactBtn/>
                 </div>
             </div>
             <div className="row">
@@ -41,6 +45,7 @@ export const ContactPage = () => {
             </div>
             <ContactModal/>
             <DeleteContact/>
+            <ImportContact/>
         </>
     )
 }

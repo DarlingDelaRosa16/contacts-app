@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import { clearErrMs } from "../store/auth/authSlice"
-import { onCloseModal, onCloseSmModal, onOpenModal, onOpenSmModal, onSetTitle, onSetType, onAlertOpenModal, onAlertCloseModal } from "../store/modal/modalSlice"
+import { onCloseModal, onCloseSmModal, onOpenModal, onOpenSmModal, onSetTitle, onSetType, onAlertOpenModal, onAlertCloseModal, onOpenImportModal, onCloseImportModal } from "../store/modal/modalSlice"
 
 
 export const useModalStore = () => {
     
     const dispatch = useDispatch()
-    const {isOpen, isSmOpen, modalData, alertModal} = useSelector(state => state.modal)
+    const {isOpen, isSmOpen, modalData, alertModal, importModal} = useSelector(state => state.modal)
     
     const openModal = ()=> {
         dispatch(onOpenModal())   
@@ -14,6 +14,14 @@ export const useModalStore = () => {
 
     const closeModal =()=>{
         dispatch(onCloseModal())
+    }
+
+    const openImportModal = ()=> {
+        dispatch(onOpenImportModal())   
+    }
+
+    const closeImportModal =()=>{
+        dispatch(onCloseImportModal())
     }
 
     const openAlertModal = (text)=> {
@@ -46,6 +54,7 @@ export const useModalStore = () => {
         isSmOpen,
         modalData,
         alertModal,
+        importModal,
 
         //methods
         closeModal,
@@ -55,6 +64,9 @@ export const useModalStore = () => {
         setTitle,
         setType,
         openAlertModal,
-        closeAlertModal
+        closeAlertModal,
+        openImportModal,
+        closeImportModal
+
     }
 }

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { getEnvVariables } from '../helpers/getEnvVariables';
 
-
 const {REACT_APP_API_URL} = getEnvVariables();
 
 export const contactApi = axios.create({

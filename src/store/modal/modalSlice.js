@@ -13,7 +13,8 @@ export const modalSlice = createSlice({
       alertModal: {
          state:false,
          alertMs: ''
-      }
+      },
+      importModal: false
    },
 
    reducers: {
@@ -43,6 +44,12 @@ export const modalSlice = createSlice({
       onAlertCloseModal: (state) => {
          state.alertModal.state = false;
          state.alertModal.alertMs = ''
+      },
+      onOpenImportModal: (state) => {
+         state.importModal = true;
+      },
+      onCloseImportModal: (state) => {
+         state.importModal = false;
       }
 
    }
@@ -50,4 +57,4 @@ export const modalSlice = createSlice({
 });
 
 
-export const { onOpenModal, onCloseModal, onOpenSmModal, onCloseSmModal, onSetTitle, onSetType, onAlertCloseModal, onAlertOpenModal } = modalSlice.actions;
+export const { onOpenModal, onCloseModal, onOpenSmModal, onCloseSmModal, onSetTitle, onSetType, onAlertCloseModal, onAlertOpenModal, onOpenImportModal, onCloseImportModal } = modalSlice.actions;

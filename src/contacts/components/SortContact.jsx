@@ -2,11 +2,15 @@ import { useContactStore } from '../../hooks/useContactStore';
 
 export const SortContact = () => {
 
-    const {setFilterFavContact, setActiveContact} = useContactStore()    
+    const {setFilterFavContact, setActiveContact, setFilterContact} = useContactStore()    
     
     const sortByFavorite = ()=>{
         setActiveContact(null)
         setFilterFavContact()
+    }
+
+    const sortAllContacts = ()=>{
+        setFilterContact(null)
     }
 
     return (
@@ -19,9 +23,18 @@ export const SortContact = () => {
                 <li>
                     <button 
                         className="dropdown-item" 
-                        onClick={sortByFavorite }
+                        onClick={sortByFavorite}
                     >
                         Favorites
+                    </button>
+                </li>
+
+                <li>
+                    <button 
+                        className="dropdown-item" 
+                        onClick={sortAllContacts}
+                    >
+                        All Contacts
                     </button>
                 </li>
 

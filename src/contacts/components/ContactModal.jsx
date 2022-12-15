@@ -26,11 +26,8 @@ export const ContactModal = () => {
     const onSubmit = (e) =>{
         e.preventDefault()
         
-        if(modalData.type === 'create'){
-            startNewContact({...formState })
-        }else{
-            startUpdateContact({...formState})
-        }
+        startNewContact({...formState })
+        
         onResetForm()
         closeModal()
     }
