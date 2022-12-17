@@ -7,8 +7,8 @@ import { useContactStore } from '../../hooks/useContactStore';
 
 export const ImportContact = () => {
 
-    const {importModal, closeImportModal} = useModalStore()
-    const {startNewContact} = useContactStore()
+    const {importModal, closeImportModal, openAlertModal} = useModalStore()
+    const {startNewContact, contacts} = useContactStore()
     const [contactsFromFile, setContactsFromFile] = useState([])
 
     const importFile = async (e) => {
@@ -26,8 +26,22 @@ export const ImportContact = () => {
     }
 
     const saveContactFromFile = ()=> {
-        contactsFromFile.map(contact => {
-            startNewContact({...contact, favorite: false})
+        
+        const emailFromExcel =  contacts.map(contact => contact.email)
+        const contactsDoExist = contactsFromFile.filter(contact => emailFromExcel.indexOf(contact.email) !== -1 )
+        const contactsAbleToCreate = contactsFromFile.filter(contact => emailFromExcel.indexOf(contact.email) === -1 )
+        
+        openAlertModal(
+            <> 
+                <h6>Those contact already exists</h6> <hr />
+                <ul>
+                    {contactsDoExist.map(contact =>( <li key={contact.email}>{contact.name} - {contact.email} - {contact.phone}</li> ))} 
+                </ul>
+            </>
+        )
+
+        contactsAbleToCreate.map(contact => {
+                startNewContact({...contact, favorite: false})
         })
     }
 

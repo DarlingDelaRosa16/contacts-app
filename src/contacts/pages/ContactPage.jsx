@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useContactStore } from "../../hooks/useContactStore"
+import { AlertModal } from "../components/AlertModal"
 import { ContactList } from "../components/ContactList"
 import { ContactModal } from "../components/ContactModal"
 import { ContactSearch } from "../components/ContactSearch"
@@ -46,6 +47,8 @@ export const ContactPage = () => {
             <ContactModal/>
             <DeleteContact/>
             <ImportContact/>
+            <AlertModal/>
+
         </>
     )
 }

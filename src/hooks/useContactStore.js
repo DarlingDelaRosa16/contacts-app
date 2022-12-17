@@ -34,7 +34,6 @@ export const useContactStore = () => {
     const startNewContact = async (contact) => {
         try {
             const {data} = await contactApi.post('/contact/new', contact)
-            console.log(data)
             dispatch(onSetNewContact({ ...contact, _id: data.contact._id }))
         } catch (error) {
             console.log(error) 
@@ -44,8 +43,8 @@ export const useContactStore = () => {
 
     const startDeleteContact = async(contact) => {
         try {
-            await contactApi.delete(`/contact/${contact}`)
             dispatch(onDeleteContact(contact))
+            await contactApi.delete(`/contact/${contact}`)
         } catch (error) {
             console.log(error) 
             openAlertModal('Error removing the contact')

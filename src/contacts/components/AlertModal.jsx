@@ -5,7 +5,7 @@ import { customStyles } from '../helpers/customStyles';
 export const AlertModal = () => {
 
     const { closeAlertModal, alertModal} = useModalStore()
-
+    
     return (
         <Modal
         isOpen={alertModal.state}
@@ -15,7 +15,7 @@ export const AlertModal = () => {
         closeTimeoutMS={200}
         >
             <div >
-                <p>{alertModal.alertMs}</p>
+                <>{alertModal.alertMs}</>
                 <hr />
 
                 <button 

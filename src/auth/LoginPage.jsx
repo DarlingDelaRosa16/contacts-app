@@ -29,7 +29,7 @@ export const LoginPage = () => {
     startLogin({email: loginEmail, password:loginPass})
     onLoginResetForm()
   }
-
+  
   const registerSubmit = (e)=>{
     e.preventDefault()
 

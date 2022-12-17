@@ -9,29 +9,41 @@ import './ContactModal.css';
 
 export const ContactModal = () => {
 
-    const { isOpen, closeModal, modalData } = useModalStore()
-    const {startNewContact, activeContact, startUpdateContact} = useContactStore()
+    const { isOpen, closeModal, modalData, openAlertModal } = useModalStore()
+    const { startNewContact, activeContact, startUpdateContact } = useContactStore()
 
-    const {onInputChange, onResetForm, name, lastName, nickName, setDataForm,
-        phone, secondPhone, email, redSocial, webSite, country, formState} = useForm(inicialFormState)
-    
+    const { onInputChange, onResetForm, name, lastName, nickName, setDataForm,
+        phone, secondPhone, email, redSocial, webSite, country, formState } = useForm(inicialFormState)
+
     useEffect(() => {
-        if(modalData.type === 'update' && isOpen ) {
+        if (modalData.type === 'update' && isOpen) {
             setDataForm(activeContact)
-        }else{
+        } else {
             setDataForm(inicialFormState)
         }
     }, [isOpen])
-    
-    const onSubmit = (e) =>{
+
+    const onSubmit = (e) => {
         e.preventDefault()
-        
-        startNewContact({...formState })
-        
+        if (modalData.type === 'create') {
+            startNewContact({ ...formState })
+        } else {
+            if (formState === activeContact) {
+                closeModal()
+                return
+            }
+            if (formState.name.length <= 1 || formState.lastName.length <= 1 || formState.email.length <= 5 || formState.phone.length <= 5) {
+                closeModal()
+                openAlertModal('We can not UPDATE the contact one of the fields is incorrect or blank')
+                return
+            }
+            startUpdateContact({ ...formState })
+        }
+
         onResetForm()
         closeModal()
     }
-    
+
     return (
         <Modal
             isOpen={isOpen}
