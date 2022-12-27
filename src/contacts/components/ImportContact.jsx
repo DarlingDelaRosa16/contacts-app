@@ -7,45 +7,56 @@ import { useContactStore } from '../../hooks/useContactStore';
 
 export const ImportContact = () => {
 
-    const {importModal, closeImportModal, openAlertModal} = useModalStore()
-    const {startNewContact, contacts} = useContactStore()
+    const { importModal, closeImportModal, openAlertModal } = useModalStore()
+    const { startNewContact, contacts } = useContactStore()
     const [contactsFromFile, setContactsFromFile] = useState([])
 
     const importFile = async (e) => {
         e.preventDefault()
 
         const file = e.target.files[0]
-        const data = await file.arrayBuffer()
-        const workBook = XLSX.read(data)
+        
+        if (file?.name.includes('.xlsx')){
 
-        const workBookSheets = workBook.Sheets[workBook.SheetNames[0]]
-        const jsonData = XLSX.utils.sheet_to_json(workBookSheets)
+            const data = await file.arrayBuffer()
+            const workBook = XLSX.read(data)
 
-        setContactsFromFile(jsonData)
+            const workBookSheets = workBook.Sheets[workBook.SheetNames[0]]
+            const jsonData = XLSX.utils.sheet_to_json(workBookSheets)
+
+            setContactsFromFile(jsonData)
+
+        }else{
+            closeImportModal()
+            openAlertModal('This file is not compatible')
+        }
 
     }
 
-    const saveContactFromFile = ()=> {
-        
-        const emailFromExcel =  contacts.map(contact => contact.email)
-        const contactsDoExist = contactsFromFile.filter(contact => emailFromExcel.indexOf(contact.email) !== -1 )
-        const contactsAbleToCreate = contactsFromFile.filter(contact => emailFromExcel.indexOf(contact.email) === -1 )
-        
-        openAlertModal(
-            <> 
-                <h6>Those contact already exists</h6> <hr />
-                <ul>
-                    {contactsDoExist.map(contact =>( <li key={contact.email}>{contact.name} - {contact.email} - {contact.phone}</li> ))} 
-                </ul>
-            </>
-        )
+    const saveContactFromFile = () => {
+
+        const emailFromExcel = contacts.map(contact => contact.email)
+        const contactsDoExist = contactsFromFile.filter(contact => emailFromExcel.indexOf(contact.email) !== -1)
+        const contactsAbleToCreate = contactsFromFile.filter(contact => emailFromExcel.indexOf(contact.email) === -1)
+
+        if (contactsDoExist.length > 1) {
+
+            openAlertModal(
+                <>
+                    <h6>Those contact already exists</h6> <hr />
+                    <ul>
+                        {contactsDoExist.map(contact => (<li key={contact.email}>{contact.name} - {contact.email} - {contact.phone}</li>))}
+                    </ul>
+                </>
+            )
+        }
 
         contactsAbleToCreate.map(contact => {
-                startNewContact({...contact, favorite: false})
+            startNewContact({ ...contact, favorite: false })
         })
     }
 
-    const confirmationClick = ()=>{
+    const confirmationClick = () => {
         saveContactFromFile()
         closeImportModal()
     }
